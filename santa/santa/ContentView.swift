@@ -118,6 +118,13 @@ struct SelectSantaView: View {
                 .background(Color.white)
                 .cornerRadius(15)
             }
+            .padding(.top, 60.0)
+            Text("話を聞いてもらうサンタを選ぶ")
+                .foregroundColor(Color.white)
+                .frame(width: 395, height: 100)
+                .background(Color.xRed)
+                .padding(.bottom, 700.0)
+                .font(.system(size: 20))
         }
     }
 }
