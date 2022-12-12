@@ -7,20 +7,124 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct FirstView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            ZStack {
+                Color.xRed
+                    .ignoresSafeArea()
+            }
+            .navigationTitle("FirstView")
         }
-        .padding()
+    }
+}
+
+struct AskScheduleView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        ZStack {
+            Color.xGreen
+                .ignoresSafeArea()
+            VStack {
+                Text("クリスマスに予定がありますか？")
+                    .foregroundColor(Color.white)
+                    .padding(.bottom, 96.0)
+                Text("ある！！")
+                    .frame(width: 294, height: 54)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
+                    .cornerRadius(27)
+                    .padding(.bottom, 35.0)
+                Text("ない…")
+                    .frame(width: 294, height: 54)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
+                    .cornerRadius(27)
+            }
+        }
+        .navigationTitle("AskScheduleView")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(
+                    action: {
+                        dismiss()
+                    }, label: {
+                        Text("<")
+                    }
+                ).tint(Color.orange)
+            }
+        }
+    }
+}
+
+struct SelectSantaView: View {
+    var body: some View {
+        ZStack {
+            Color.xGreen
+                .ignoresSafeArea()
+            VStack {
+                HStack {
+                    Circle()
+                        .strokeBorder(Color.black)
+                        .frame(width: 54, height: 54)
+                        
+                    VStack(alignment: .leading) {
+                        Text("サンタ＝サン")
+                        Text("日本のクリスマスをずっと見てきた。ゆったり聞いてくれます。")
+                    }
+                    .font(.system(size: 14))
+                }
+                .frame(width: 290.0, height: 54.0)
+                .padding(.horizontal, 18.0)
+                .padding(.vertical, 16.0)
+                .background(Color.white)
+                .cornerRadius(15)
+                .padding(.bottom, 114.0)
+                
+                HStack {
+                    Circle()
+                        .strokeBorder(Color.black)
+                        .frame(width: 54, height: 54)
+                        
+                    VStack(alignment: .leading) {
+                        Text("サンタ＝サン")
+                        Text("日本のクリスマスをずっと見てきた。ゆったり聞いてくれます。")
+                    }
+                    .font(.system(size: 14))
+                }
+                .frame(width: 290.0, height: 54.0)
+                .padding(.horizontal, 18.0)
+                .padding(.vertical, 16.0)
+                .background(Color.white)
+                .cornerRadius(15)
+                .padding(.bottom, 114.0)
+                
+                HStack {
+                    Circle()
+                        .strokeBorder(Color.black)
+                        .frame(width: 54, height: 54)
+                        
+                    VStack(alignment: .leading) {
+                        Text("サンタ＝サン")
+                        Text("日本のクリスマスをずっと見てきた。ゆったり聞いてくれます。")
+                    }
+                    .font(.system(size: 14))
+                }
+                .frame(width: 290.0, height: 54.0)
+                .padding(.horizontal, 18.0)
+                .padding(.vertical, 16.0)
+                .background(Color.white)
+                .cornerRadius(15)
+            }
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        // AskScheduleView()
+        SelectSantaView()
     }
 }
