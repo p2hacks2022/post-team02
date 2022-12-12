@@ -9,13 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack {
+            NavigationLink {
+                SecondView()
+            } label: {
+                Label("Go Second View", systemImage: "figure.walk")
+                    .font(.title)
+                    .foregroundColor(Color.white)
+                    
+            }
+            .frame(width: 300.0, height: 100.0)
+            .background(Color.orange)
+            .cornerRadius(50)
+            .navigationTitle("TopView")
+            .navigationBarHidden(true)
         }
-        .padding()
+    }
+}
+
+struct SecondView: View {
+    var body: some View {
+        VStack {
+            Text("SecondView")
+        }
     }
 }
 
