@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C36C5692948F8440012FC4A /* database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C36C5682948F8440012FC4A /* database.swift */; };
 		9C461C862948AE910065417E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C461C852948AE910065417E /* GoogleService-Info.plist */; };
 		9C461C872948AE910065417E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C461C852948AE910065417E /* GoogleService-Info.plist */; };
 		9C461C882948AE910065417E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C461C852948AE910065417E /* GoogleService-Info.plist */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C36C5682948F8440012FC4A /* database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = database.swift; sourceTree = "<group>"; };
 		9C461C852948AE910065417E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9C7A0F9929458444003644CB /* santa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = santa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7A0F9C29458444003644CB /* santaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = santaApp.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				9C7A0F9C29458444003644CB /* santaApp.swift */,
 				9C7A0F9E29458444003644CB /* ContentView.swift */,
+				9C36C5682948F8440012FC4A /* database.swift */,
 				9C7A0FA029458448003644CB /* Assets.xcassets */,
 				9C461C852948AE910065417E /* GoogleService-Info.plist */,
 				9C7A0FA229458448003644CB /* Preview Content */,
@@ -281,6 +284,7 @@
 			files = (
 				9C7A0F9F29458444003644CB /* ContentView.swift in Sources */,
 				9C7A0F9D29458444003644CB /* santaApp.swift in Sources */,
+				9C36C5692948F8440012FC4A /* database.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

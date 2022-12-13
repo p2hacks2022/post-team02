@@ -6,15 +6,22 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseFirestore
+
+let db = Firestore.firestore()
 
 struct ContentView: View {
+    @State private var name = ""
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text(name)
+            TextField("input text", text: $name)
+            .frame(width: UIScreen.main.bounds.width * 0.95)
+            Button(action: {
+                Firestore.firestore().collection("users").document("user002").setData(["name": name])
+            }, label: {
+                Text("push")
+            })
         }
         .padding()
     }
