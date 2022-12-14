@@ -12,6 +12,7 @@ let db = Firestore.firestore()
 
 struct ContentView: View {
     @State private var name = ""
+    @State private var retName = ""
     var body: some View {
         VStack {
             Text(name)
@@ -20,7 +21,27 @@ struct ContentView: View {
             Button(action: {
                 Firestore.firestore().collection("users").document("user002").setData(["name": name])
             }, label: {
-                Text("push")
+                Text("push to write")
+            })
+            Text(retName)
+                .padding()
+            Button(action: {
+                Firestore.firestore().collection("users").document("user002").getDocument { (success, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        let data = success!.data()
+                        retName = success!.data()?["name"] as? String ?? ""
+                        print(data!)
+                    }
+                }
+            }, label: {
+                Text("push to read")
+            })
+            Button(action: {
+                print("debug")
+            }, label: {
+                Text("push to debug")
             })
         }
         .padding()
