@@ -16,6 +16,7 @@
 		9C7A0FAE29458449003644CB /* santaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7A0FAD29458449003644CB /* santaTests.swift */; };
 		9C7A0FB829458449003644CB /* santaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7A0FB729458449003644CB /* santaUITests.swift */; };
 		9C7A0FBA29458449003644CB /* santaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7A0FB929458449003644CB /* santaUITestsLaunchTests.swift */; };
+		9CFE599A2949FC7300FDFB93 /* 47699.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CFE59992949FC7300FDFB93 /* 47699.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		9C7A0FB329458449003644CB /* santaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = santaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7A0FB729458449003644CB /* santaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = santaUITests.swift; sourceTree = "<group>"; };
 		9C7A0FB929458449003644CB /* santaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = santaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9CFE59992949FC7300FDFB93 /* 47699.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 47699.otf; sourceTree = "<group>"; };
+		9CFE599B2949FD1600FDFB93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +101,11 @@
 		9C7A0F9B29458444003644CB /* santa */ = {
 			isa = PBXGroup;
 			children = (
+				9CFE599B2949FD1600FDFB93 /* Info.plist */,
 				9C7A0F9C29458444003644CB /* santaApp.swift */,
 				9C7A0F9E29458444003644CB /* ContentView.swift */,
 				9C461C832947710E0065417E /* CustomBackButton.swift */,
+				9CFE59992949FC7300FDFB93 /* 47699.otf */,
 				9C7A0FA029458448003644CB /* Assets.xcassets */,
 				9C461C81294720AD0065417E /* ColorExtention.swift */,
 				9C7A0FA229458448003644CB /* Preview Content */,
@@ -237,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CFE599A2949FC7300FDFB93 /* 47699.otf in Resources */,
 				9C7A0FA429458448003644CB /* Preview Assets.xcassets in Resources */,
 				9C7A0FA129458448003644CB /* Assets.xcassets in Resources */,
 			);
@@ -427,6 +433,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"santa/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = santa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -455,6 +462,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"santa/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = santa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
