@@ -26,7 +26,7 @@ struct AskScheduleView: View {
                 Color.xGreen
                     .ignoresSafeArea()
                 VStack {
-                    Text("クリスマスに予定がありますか？")
+                    Text("クリスマスに予定がありますか？?")
                         .foregroundColor(Color.white)
                         .padding(.bottom, 96.0)
                     
