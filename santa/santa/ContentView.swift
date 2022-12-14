@@ -13,11 +13,17 @@ struct HomeView: View {
             NavigationLink{
                 AskScheduleView()
             } label: {
-                VStack{
-                    Image("Home img")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .edgesIgnoringSafeArea(.all)
+                ZStack{
+                    VStack{
+                        Image("HomeView_back")
+                            .ignoresSafeArea()
+                    }
+                    
+                    Text("TAP to TALK")
+                        .font(.custom("AB-hanamaki", size: 15))
+                        .foregroundColor(Color.white)
+                        .padding(.top, 700)
+                        //.position(x: 137+115/2, y: 767)
                 }
             }
         }
@@ -32,14 +38,17 @@ struct AskScheduleView: View {
                     .ignoresSafeArea()
                 VStack {
                     Text("クリスマスに予定がありますか？")
+                        .font(.custom("AB-hanamaki", size: 20))
                         .foregroundColor(Color.white)
-                        .padding(.bottom, 96.0)
+                        .padding(.top, 90.0)
+                        .padding(.bottom, 141.0)
                     
                     NavigationLink {
                         TestView()
                         //SelectSantaView()
                     } label: {
-                        Text("ある！！")
+                        Text("ある！")
+                            .font(.custom("AB-hanamaki", size: 20))
                             .frame(width: 294, height: 54)
                             .foregroundColor(Color.black)
                             .background(Color.white)
@@ -47,11 +56,16 @@ struct AskScheduleView: View {
                             .padding(.bottom, 35.0)
                     }
                     
-                    Text("ない…")
+                    Text("ない...")
+                        .font(.custom("AB-hanamaki", size: 20))
                         .frame(width: 294, height: 54)
                         .foregroundColor(Color.black)
                         .background(Color.white)
                         .cornerRadius(27)
+                        .padding(.bottom, 84.0)
+                    
+                    Image("santa")
+                        .padding(.leading, 50.0)
                 }
             }
             .navigationTitle("AskScheduleView")
@@ -207,8 +221,8 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-        //AskScheduleView()
+        //HomeView()
+        AskScheduleView()
         // SelectSantaView()
     }
 }
