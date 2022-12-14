@@ -11,8 +11,10 @@ import SwiftUI
 struct santaApp: App {
     var body: some Scene {
         WindowGroup {
+            HomeView()
             AskScheduleView()
-            SelectSantaView()
+            TestView()
+            //SelectSantaView()
         }
     }
 }

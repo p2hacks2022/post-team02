@@ -7,14 +7,19 @@
 
 import SwiftUI
 
-struct FirstView: View {
+struct HomeView: View {
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.xRed
-                    .ignoresSafeArea()
+        NavigationStack{
+            NavigationLink{
+                AskScheduleView()
+            } label: {
+                VStack{
+                    Image("Home img")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(.all)
+                }
             }
-            .navigationTitle("FirstView")
         }
     }
 }
@@ -31,7 +36,8 @@ struct AskScheduleView: View {
                         .padding(.bottom, 96.0)
                     
                     NavigationLink {
-                        SelectSantaView()
+                        TestView()
+                        //SelectSantaView()
                     } label: {
                         Text("ある！！")
                             .frame(width: 294, height: 54)
@@ -55,6 +61,7 @@ struct AskScheduleView: View {
     }
 }
 
+/*
 struct SelectSantaView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -162,7 +169,14 @@ struct SelectSantaView: View {
         }
     }
 }
+*/
 
+struct TestView: View {
+    var body: some View {
+        Text("test")
+    }
+}
+ 
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
     
@@ -193,7 +207,8 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        AskScheduleView()
+        HomeView()
+        //AskScheduleView()
         // SelectSantaView()
     }
 }
