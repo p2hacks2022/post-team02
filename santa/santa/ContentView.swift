@@ -56,19 +56,24 @@ struct AskHaveScheduleView: View {
                             .padding(.bottom, 35.0)
                     }
                     
-                    Text("ない...")
-                        .font(.custom("AB-hanamaki", size: 20))
-                        .frame(width: 294, height: 54)
-                        .foregroundColor(Color.black)
-                        .background(Color.white)
-                        .cornerRadius(27)
-                        .padding(.bottom, 84.0)
+                    NavigationLink {
+                        AddCalendarEventView()
+                    } label: {
+                        Text("ない...")
+                            .font(.custom("AB-hanamaki", size: 20))
+                            .frame(width: 294, height: 54)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(27)
+                            .padding(.bottom, 84.0)
+                    }
+                    
                     
                     Image("santa")
                         .padding(.leading, 50.0)
                 }
             }
-            .navigationTitle("AskScheduleView")
+            .navigationBarTitle("")
             .navigationBarHidden(true)
             
         }
@@ -273,7 +278,47 @@ struct SelectSantaView: View {
 
 struct AddCalendarEventView: View {
     var body: some View {
-        Text("test")
+        NavigationStack{
+            ZStack {
+                Color.xGreen
+                    .ignoresSafeArea()
+                VStack{
+                    Text("MERRYでHAPPYでLUCKYな予定を")
+                        .font(.custom("AB-hanamaki", size: 48))
+                        .foregroundColor(Color.white)
+                        .frame(width:241, height:351, alignment: .leading)
+                        .lineSpacing(48)
+                        .padding(.top, 50.0)
+                        .padding(.bottom, 112.0)
+                    
+                    Text("カレンダーに追加する")
+                        .font(.custom("AB-hanamaki", size: 20))
+                        .frame(width: 294, height: 54)
+                        .foregroundColor(Color.black)
+                        .background(Color.white)
+                        .cornerRadius(27)
+                        .padding(.bottom, 154.0)
+                    
+                    //back to AskScedule
+                    NavigationLink{
+                        AskHaveScheduleView()
+                    } label: {
+                        HStack{
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(Color.white)
+                            Text("やっぱり予定があった！！")
+                                .font(.custom("AB-hanamaki", size: 20))
+                                .frame(width: 250, height: 20)
+                                .foregroundColor(Color.white)
+                                .padding(.trailing, 60.0)
+                        }
+                    }
+                    
+                }
+            }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }
     }
 }
  
@@ -307,10 +352,10 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-         HomeView()
+        //HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-        // AddCalendarEventView()
+         AddCalendarEventView()
         // SelectSantaView()
     }
 }
