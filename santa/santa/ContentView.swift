@@ -76,20 +76,49 @@ struct AskHaveScheduleView: View {
 }
 
 struct AskScheduleView: View {
+    
+    init(){
+            setupNavigationBar()
+    }
+        
+    func setupNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        
+        appearance.backgroundColor = UIColor.xGreen
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
+    @Environment(\.dismiss) var dismiss
+    
     let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
+    
         var body: some View {
             ZStack {
-                VStack {
-                    Text("サンタ＝サン")
-                        .foregroundColor(Color.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .padding(.bottom, 15)
-                        .background(Color.xBlue)
-                    MyWebView(url: url)
+                MyWebView(url: url)
+            }
+            .navigationBarTitle("")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(
+                        action: {
+                            dismiss()
+                        }, label: {
+                                HStack {
+                                    Image(systemName: "chevron.backward")
+                                        .foregroundColor(Color.white)
+                                    Text("サンタ＝サン")
+                                        .foregroundColor(Color.white)
+                                        .padding(.leading, 20.0)
+                                }
+                        }
+                    )
                 }
             }
-            .navigationBarBackButtonHidden(true)
         }
 }
 
@@ -241,6 +270,12 @@ struct SelectSantaView: View {
     }
 }
 */
+
+struct AddCalendarEventView: View {
+    var body: some View {
+        Text("test")
+    }
+}
  
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
@@ -272,9 +307,10 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // HomeView()
+         HomeView()
         // AskHaveScheduleView()
-        AskScheduleView()
+        // AskScheduleView()
+        // AddCalendarEventView()
         // SelectSantaView()
     }
 }

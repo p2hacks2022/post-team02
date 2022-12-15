@@ -13,3 +13,7 @@ extension Color {
     static let xGreen = Color("xGreen")
     static let xBlue = Color("xBlue")
 }
+
+extension UIColor {
+    static let xGreen = UIColor(named: "xGreen")!
+}

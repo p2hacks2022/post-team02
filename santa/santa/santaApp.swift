@@ -13,6 +13,8 @@ struct santaApp: App {
         WindowGroup {
             HomeView()
             AskHaveScheduleView()
+            AskScheduleView()
+            AddCalendarEventView()
             //SelectSantaView()
         }
     }
