@@ -321,6 +321,101 @@ struct AddCalendarEventView: View {
         }
     }
 }
+struct test: View {
+    var body: some View {
+        VStack {
+            ChatViewControllerWrapper()
+        }
+    }
+}
+
+struct ChatViewControllerWrapper: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> ChatViewController {
+            return ChatViewController()
+        }
+    
+    func updateUIViewController(_ uiViewController: ChatViewController, context: Context) {
+        
+    }
+}
+
+class ChatViewController: UIViewController, WKScriptMessageHandler {
+    private var webView: WKWebView!
+    
+    private let apiKey = "aeaa5daf-67f3-4b03-9a0d-182aeb9c626f185165c960f1b6"
+    private let uid = UUID().uuidString
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let config = WKWebViewConfiguration()
+        let userContentController: WKUserContentController = WKUserContentController()
+        userContentController.add(self, name: "meboCallBack")
+        config.userContentController = userContentController
+        webView = WKWebView(frame: .zero, configuration: config)
+        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/bdc6523b-12a8-4e36-a042-f8934e869d6c185165b0e3c260?name=%E3%82%B5%E3%83%B3%E3%82%BF=%E3%82%B5%E3%83%B3")!))
+        view = webView
+    }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        // TODO: Impl
+        struct ChatEvent: Codable {
+            let event: String
+            let bestResponse: BestResponse?
+        }
+
+        struct BestResponse: Codable {
+            let utterance: String
+            let options: [String]
+            let extensions: Extensions?
+        }
+
+        struct Extensions: Codable {
+            let appAction: String?
+            let `where`: String?
+            let s_time: String?
+            let e_time: String?
+            let nextwhere: String?
+        }
+
+        struct ChatError: Codable {
+            let error: ChatErrorResponse
+        }
+
+        struct ChatErrorResponse: Codable {
+            let code: Int
+            let message: String
+        }
+        
+        guard let json = (message.body as? String)?.data(using: .utf8) else {
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let chatEvent: ChatEvent = try? decoder.decode(ChatEvent.self, from: json) else {
+                    if let error: ChatError = try? decoder.decode(ChatError.self, from: json) {
+                        print(error.error.message)
+                        return
+                    }
+                    fatalError("不明なエラー")
+                }
+        
+        switch chatEvent.event {
+            case "agentLoaded":
+            webView.evaluateJavaScript("setAppInfo(\"\(apiKey)\",\"\(uid)\");")
+                break
+            case "agentResponded":
+            print(chatEvent)
+            print(chatEvent.bestResponse?.extensions?.appAction)
+            print(chatEvent.bestResponse?.extensions?.s_time)
+            print(chatEvent.bestResponse?.extensions?.e_time)
+            print(chatEvent.bestResponse?.extensions?.nextwhere)
+            print(chatEvent.bestResponse?.extensions?.where)
+                break
+            default:
+                break
+        }
+    }
+}
  
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
@@ -355,7 +450,8 @@ struct ContentView_Previews: PreviewProvider {
         //HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-         AddCalendarEventView()
+        // AddCalendarEventView()
         // SelectSantaView()
+        test()
     }
 }
