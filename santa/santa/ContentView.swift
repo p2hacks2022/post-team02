@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct HomeView: View {
     var body: some View {
         NavigationStack{
             NavigationLink{
-                AskScheduleView()
+                AskHaveScheduleView()
             } label: {
                 ZStack{
                     VStack{
@@ -30,7 +31,7 @@ struct HomeView: View {
     }
 }
 
-struct AskScheduleView: View {
+struct AskHaveScheduleView: View {
     var body: some View {
         NavigationStack {
             ZStack {
@@ -44,8 +45,7 @@ struct AskScheduleView: View {
                         .padding(.bottom, 141.0)
                     
                     NavigationLink {
-                        TestView()
-                        //SelectSantaView()
+                        AskScheduleView()
                     } label: {
                         Text("ある！")
                             .font(.custom("AB-hanamaki", size: 20))
@@ -73,6 +73,63 @@ struct AskScheduleView: View {
             
         }
     }
+}
+
+struct AskScheduleView: View {
+    let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
+        var body: some View {
+            ZStack {
+                VStack {
+                    Text("サンタ＝サン")
+                        .foregroundColor(Color.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .padding(.bottom, 15)
+                        .background(Color.xBlue)
+                    MyWebView(url: url)
+                }
+            }
+            .navigationBarBackButtonHidden(true)
+        }
+}
+
+struct MyWebView: UIViewRepresentable {
+    
+    let url: String
+    private let observable = WebViewURLObservable()
+    
+    /// 監視する対象を指定して値の変化を検知する
+    var observer: NSKeyValueObservation? {
+        observable.instance
+    }
+    
+    // MARK: - UIViewRepresentable
+    /// 表示するViewのインスタンスを生成
+    /// SwiftUIで使用するUIKitのViewを返す
+    func makeUIView(context: Context) -> WKWebView {
+        WKWebView()
+    }
+    
+    // MARK: - UIViewRepresentable
+    /// アプリの状態が更新される場合に呼ばる
+    /// Viewの更新処理はこのメソッドに記述する
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+
+        /// WKWebViewのURLが変わったこと（WebView内画面遷移）を検知して、URLをログ出力する
+        observable.instance = uiView.observe(\WKWebView.url, options: .new) { view, change in
+            if let url = view.url {
+                print("Page URL: \(url)")
+            }
+        }
+        
+        /// URLを指定してWebページを読み込み
+        uiView.load(URLRequest(url: URL(string: url)!))
+    }
+}
+
+// MARK:  WKWebViewのURLが変わったこと（WebView内画面遷移）を検知するための `ObservableObject`
+private class WebViewURLObservable: ObservableObject {
+    @Published var instance: NSKeyValueObservation?
 }
 
 /*
@@ -184,12 +241,6 @@ struct SelectSantaView: View {
     }
 }
 */
-
-struct TestView: View {
-    var body: some View {
-        Text("test")
-    }
-}
  
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
@@ -221,7 +272,8 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        //HomeView()
+        // HomeView()
+        // AskHaveScheduleView()
         AskScheduleView()
         // SelectSantaView()
     }

@@ -12,8 +12,7 @@ struct santaApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-            AskScheduleView()
-            TestView()
+            AskHaveScheduleView()
             //SelectSantaView()
         }
     }
