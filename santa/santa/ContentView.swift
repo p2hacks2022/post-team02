@@ -98,7 +98,7 @@ struct AskScheduleView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
+    let url = "https://mebo.work/chat/bdc6523b-12a8-4e36-a042-f8934e869d6c185165b0e3c260?name=%E3%82%B5%E3%83%B3%E3%82%BF=%E3%82%B5%E3%83%B3&platform=webview"
     
         var body: some View {
             ZStack {
@@ -166,115 +166,6 @@ private class WebViewURLObservable: ObservableObject {
     @Published var instance: NSKeyValueObservation?
 }
 
-/*
-struct SelectSantaView: View {
-    
-    @Environment(\.dismiss) var dismiss
-    
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.red
-    }
-    
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.xGreen
-                    .ignoresSafeArea()
-                Text("話を聞いてもらうサンタを選ぶ")
-                    .foregroundColor(Color.white)
-                    .frame(width: 395, height: 120)
-                    .padding(.top, 30.0)
-                    .background(Color.xRed)
-                    .cornerRadius(20)
-                    .padding(.bottom, 680.0)
-                    .font(.system(size: 20))
-                VStack {
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝サン")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                            Text("日本のクリスマスをずっと見てきた。ゆったり話を聞いてくれます。")
-                                .font(.system(size: 13))
-                        }
-                        
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .padding(.bottom, 100.0)
-                    
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝マン")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                            Text("アメリカ生まれのアメリカ育ち。ファンキーに話を聞いてくれます。")
-                                .font(.system(size: 13))
-                        }
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .padding(.bottom, 100.0)
-                    
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝イエア")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                                
-                            Text("世界中を飛び回っている。感情豊かに話を聞いてくれます")
-                                .font(.system(size: 13))
-                        }
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                }
-                .padding(.top, 60.0)
-            }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Button(
-                        action: {
-                            dismiss()
-                        }, label: {
-                            HStack {
-                                Image(systemName: "chevron.backward")
-                                    .foregroundColor(Color.white)
-                                Text("本当は予定がなかった…")
-                                    .foregroundColor(Color.white)
-                            }
-                        }
-                    )
-                    Spacer()
-                }
-            }
-        }
-    }
-}
-*/
 
 struct AddCalendarEventView: View {
     var body: some View {
@@ -340,6 +231,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
     }
 }
 
+//チャット画面の表示
 class ChatViewController: UIViewController, WKScriptMessageHandler {
     private var webView: WKWebView!
     
@@ -353,26 +245,27 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
         userContentController.add(self, name: "meboCallBack")
         config.userContentController = userContentController
         webView = WKWebView(frame: .zero, configuration: config)
-        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/bdc6523b-12a8-4e36-a042-f8934e869d6c185165b0e3c260?name=%E3%82%B5%E3%83%B3%E3%82%BF=%E3%82%B5%E3%83%B3")!))
+        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/bdc6523b-12a8-4e36-a042-f8934e869d6c185165b0e3c260?name=%E3%82%B5%E3%83%B3%E3%82%BF=%E3%82%B5%E3%83%B3&platform=webview")!))
         view = webView
     }
 
+    //meboのチャット画面から送られてくる情報をハンドリング
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        // TODO: Impl
+        
         struct ChatEvent: Codable {
             let event: String
             let bestResponse: BestResponse?
+            let extensions: Extensions?
         }
 
         struct BestResponse: Codable {
             let utterance: String
             let options: [String]
-            let extensions: Extensions?
         }
 
         struct Extensions: Codable {
             let appAction: String?
-            let `where`: String?
+            let f_where: String?
             let s_time: String?
             let e_time: String?
             let nextwhere: String?
@@ -404,12 +297,34 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
             webView.evaluateJavaScript("setAppInfo(\"\(apiKey)\",\"\(uid)\");")
                 break
             case "agentResponded":
-            print(chatEvent)
-            print(chatEvent.bestResponse?.extensions?.appAction)
-            print(chatEvent.bestResponse?.extensions?.s_time)
-            print(chatEvent.bestResponse?.extensions?.e_time)
-            print(chatEvent.bestResponse?.extensions?.nextwhere)
-            print(chatEvent.bestResponse?.extensions?.where)
+            
+            if let str = chatEvent.extensions?.f_where {
+                print(str)
+            }
+            
+            if let str = chatEvent.extensions?.s_time {
+                print(str)
+            }
+            
+            if let str = chatEvent.extensions?.e_time {
+                print(str)
+            }
+            
+            if let str = chatEvent.extensions?.nextwhere {
+                print(str)
+            }
+            
+            webView.evaluateJavaScript("setAppInfo(\"\(apiKey)\",\"\(uid)\");")
+            
+            
+//            print(chatEvent.extensions?.appAction)
+//            print(chatEvent.extensions?.f_where)
+//            print(chatEvent.extensions?.s_time)
+//            print(chatEvent.extensions?.e_time)
+//            print(chatEvent.extensions?.nextwhere)
+//
+            
+            
                 break
             default:
                 break
