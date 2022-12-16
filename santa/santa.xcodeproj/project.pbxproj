@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C0F3C0D294CC9B30031CE28 /* calendarControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */; };
 		9C461C82294720AD0065417E /* ColorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C461C81294720AD0065417E /* ColorExtention.swift */; };
 		9C461C842947710E0065417E /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C461C832947710E0065417E /* CustomBackButton.swift */; };
 		9C7A0F9D29458444003644CB /* santaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7A0F9C29458444003644CB /* santaApp.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarControll.swift; sourceTree = "<group>"; };
 		9C461C81294720AD0065417E /* ColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtention.swift; sourceTree = "<group>"; };
 		9C461C832947710E0065417E /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		9C7A0F9929458444003644CB /* santa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = santa.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 				9CFE599B2949FD1600FDFB93 /* Info.plist */,
 				9C7A0F9C29458444003644CB /* santaApp.swift */,
 				9C7A0F9E29458444003644CB /* ContentView.swift */,
+				9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */,
 				9C461C832947710E0065417E /* CustomBackButton.swift */,
 				9CFE59992949FC7300FDFB93 /* 47699.otf */,
 				9C7A0FA029458448003644CB /* Assets.xcassets */,
@@ -273,6 +276,7 @@
 				9C461C842947710E0065417E /* CustomBackButton.swift in Sources */,
 				9C7A0F9F29458444003644CB /* ContentView.swift in Sources */,
 				9C7A0F9D29458444003644CB /* santaApp.swift in Sources */,
+				9C0F3C0D294CC9B30031CE28 /* calendarControll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +438,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = santa/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "カレンダーのためのやつ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -463,6 +468,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = santa/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "カレンダーのためのやつ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

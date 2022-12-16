@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WebKit
+import EventKitUI
 
 struct HomeView: View {
     var body: some View {
@@ -277,6 +278,12 @@ struct SelectSantaView: View {
 */
 
 struct AddCalendarEventView: View {
+    private let eventStore = EventStore()
+    let calendar = Calendar(identifier: .gregorian)
+    @State private var eventTitle = "test"
+    @State private var startDate = Date()
+    @State private var endDate = Date()
+    
     var body: some View {
         NavigationStack{
             ZStack {
@@ -291,13 +298,24 @@ struct AddCalendarEventView: View {
                         .padding(.top, 50.0)
                         .padding(.bottom, 112.0)
                     
-                    Text("カレンダーに追加する")
-                        .font(.custom("AB-hanamaki", size: 20))
-                        .frame(width: 294, height: 54)
-                        .foregroundColor(Color.black)
-                        .background(Color.white)
-                        .cornerRadius(27)
-                        .padding(.bottom, 154.0)
+                    Button {
+                        Task {
+                            await eventStore.requestAccess()
+                            await eventStore.addEvent(
+                                startDate: calendar.date(from: DateComponents(year: 2022, month: 12, day: 25, hour: 19, minute: 0))!,
+                                endDate: calendar.date(from: DateComponents(year: 2022, month: 12, day: 25, hour: 22, minute: 0))!,
+                                title: eventTitle
+                            )
+                        }
+                    } label: {
+                        Text("カレンダーに追加する")
+                            .font(.custom("AB-hanamaki", size: 20))
+                            .frame(width: 294, height: 54)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(27)
+                            .padding(.bottom, 154.0)
+                    }
                     
                     //back to AskScedule
                     NavigationLink{
@@ -352,10 +370,10 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        //HomeView()
+        HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-         AddCalendarEventView()
+        // AddCalendarEventView()
         // SelectSantaView()
     }
 }
