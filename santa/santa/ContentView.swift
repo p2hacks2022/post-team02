@@ -109,7 +109,7 @@ struct AskScheduleView: View {
     
     var body: some View {
         ZStack {
-            MyWebView(url: url)
+            ChatViewControllerWrapper()
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
@@ -173,116 +173,6 @@ private class WebViewURLObservable: ObservableObject {
     @Published var instance: NSKeyValueObservation?
 }
 
-
-//struct SelectSantaView: View {
-//
-//    @Environment(\.dismiss) var dismiss
-//
-//    init() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.red
-//    }
-//
-//    var body: some View {
-//        NavigationStack {
-//            ZStack {
-//                Color.xGreen
-//                    .ignoresSafeArea()
-//                Text("話を聞いてもらうサンタを選ぶ")
-//                    .foregroundColor(Color.white)
-//                    .frame(width: 395, height: 120)
-//                    .padding(.top, 30.0)
-//                    .background(Color.xRed)
-//                    .cornerRadius(20)
-//                    .padding(.bottom, 680.0)
-//                    .font(.system(size: 20))
-//                VStack {
-//                    HStack {
-//                        Circle()
-//                            .strokeBorder(Color.black)
-//                            .frame(width: 54, height: 54)
-//
-//                        VStack(alignment: .leading) {
-//                            Text("サンタ＝サン")
-//                                .fontWeight(.black)
-//                                .font(.system(size: 15))
-//                            Text("日本のクリスマスをずっと見てきた。ゆったり話を聞いてくれます。")
-//                                .font(.system(size: 13))
-//                        }
-//
-//                    }
-//                    .frame(width: 290.0, height: 54.0)
-//                    .padding(.horizontal, 18.0)
-//                    .padding(.vertical, 16.0)
-//                    .background(Color.white)
-//                    .cornerRadius(15)
-//                    .padding(.bottom, 100.0)
-//
-//                    HStack {
-//                        Circle()
-//                            .strokeBorder(Color.black)
-//                            .frame(width: 54, height: 54)
-//
-//                        VStack(alignment: .leading) {
-//                            Text("サンタ＝マン")
-//                                .fontWeight(.black)
-//                                .font(.system(size: 15))
-//                            Text("アメリカ生まれのアメリカ育ち。ファンキーに話を聞いてくれます。")
-//                                .font(.system(size: 13))
-//                        }
-//                    }
-//                    .frame(width: 290.0, height: 54.0)
-//                    .padding(.horizontal, 18.0)
-//                    .padding(.vertical, 16.0)
-//                    .background(Color.white)
-//                    .cornerRadius(15)
-//                    .padding(.bottom, 100.0)
-//
-//                    HStack {
-//                        Circle()
-//                            .strokeBorder(Color.black)
-//                            .frame(width: 54, height: 54)
-//
-//                        VStack(alignment: .leading) {
-//                            Text("サンタ＝イエア")
-//                                .fontWeight(.black)
-//                                .font(.system(size: 15))
-//
-//                            Text("世界中を飛び回っている。感情豊かに話を聞いてくれます")
-//                                .font(.system(size: 13))
-//                        }
-//                    }
-//                    .frame(width: 290.0, height: 54.0)
-//                    .padding(.horizontal, 18.0)
-//                    .padding(.vertical, 16.0)
-//                    .background(Color.white)
-//                    .cornerRadius(15)
-//                }
-//                .padding(.top, 60.0)
-//            }
-//            .navigationBarBackButtonHidden(true)
-//            .toolbar {
-//                ToolbarItemGroup(placement: .bottomBar) {
-//                    Button(
-//                        action: {
-//                            dismiss()
-//                        }, label: {
-//                            HStack {
-//                                Image(systemName: "chevron.backward")
-//                                    .foregroundColor(Color.white)
-//                                Text("本当は予定がなかった…")
-//                                    .foregroundColor(Color.white)
-//                            }
-//                        }
-//                    )
-//                    Spacer()
-//                }
-//            }
-//        }
-//    }
-//}
-
-
 struct AddCalendarEventView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -293,6 +183,9 @@ struct AddCalendarEventView: View {
     @State private var endDate_timestamp = Timestamp()
     @State private var startDate = Date()
     @State private var endDate = Date()
+    @State private var max = 0
+    @State private var num = 0
+    @State private var idx = 0
     
     
     var body: some View {
@@ -309,11 +202,27 @@ struct AddCalendarEventView: View {
                     Button {
                         Task {
                             await eventStore.requestAccess()
-                            await eventStore.addEvent(
-                                startDate: startDate,
-                                endDate: endDate,
-                                title: eventTitle
-                            )
+                            for i in 0...idx {
+                                print(i)
+                                Firestore.firestore().collection("schedules").document(String(num)).getDocument { (success, error) in
+                                    if let error = error {
+                                        print(error.localizedDescription)
+                                    } else {
+                                        let data = success!.data()
+                                        eventTitle = data?["name" + String(i)] as? String ?? ""
+                                        startDate_timestamp = data?["startDate" + String(i)] as! Timestamp
+                                        endDate_timestamp = data?["endDate" + String(i)] as! Timestamp
+                                        startDate = startDate_timestamp.dateValue()
+                                        endDate = endDate_timestamp.dateValue()
+                                        print(eventTitle)
+                                        eventStore.addEvent(
+                                            startDate: startDate,
+                                            endDate: endDate,
+                                            title: eventTitle
+                                        )
+                                    }
+                                }
+                            }
                         }
                     } label: {
                         Text("カレンダーに追加する")
@@ -327,20 +236,34 @@ struct AddCalendarEventView: View {
                     }
                 }
                 .task {
-                    Firestore.firestore().collection("schedules").document("-1").getDocument { (success, error) in
+                    Firestore.firestore().collection("schedules").document("cntSet").getDocument { (success, error) in
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
                             let data = success!.data()
-                            eventTitle = data?["name"] as? String ?? ""
-                            startDate_timestamp = data?["startDate"] as! Timestamp
-                            endDate_timestamp = data?["endDate"] as! Timestamp
-                            startDate = startDate_timestamp.dateValue()
-                            endDate = endDate_timestamp.dateValue()
-                            
-                            print(eventTitle)
-                            print(startDate)
-                            print(endDate)
+                            max = data?["cnt"] as! Int
+                            num = Int.random(in: 0..<max)
+                            print("num: " + String(num))
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        print("String(num): " + String(num))
+                        Firestore.firestore().collection("schedules").document(String(num)).getDocument { (success, error) in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                let data = success!.data()
+//                                eventTitle = data?["name0"] as? String ?? ""
+//                                startDate_timestamp = data?["startDate0"] as! Timestamp
+//                                endDate_timestamp = data?["endDate0"] as! Timestamp
+//                                startDate = startDate_timestamp.dateValue()
+//                                endDate = endDate_timestamp.dateValue()
+                                idx = data?["num"] as! Int
+                                
+//                                print(eventTitle)
+//                                print(startDate)
+//                                print(endDate)
+                            }
                         }
                     }
                 }
@@ -407,12 +330,12 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // HomeView()
+        HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-        //AddCalendarEventView()
+        // AddCalendarEventView()
         // AddCalendarEventView()
         // SelectSantaView()
-        Test()
+        // Test()
     }
 }
