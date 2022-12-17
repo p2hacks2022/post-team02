@@ -21,7 +21,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
     }
 }
 
-class ChatViewController: UIViewController, WKScriptMessageHandler {
+class ChatViewController: UIViewController, WKScriptMessageHandler, ObservableObject {
     private var webView: WKWebView!
     
     private let apiKey = "a4ba4aa7-94a2-4834-ab75-01ea506d9d81185207859ef20e"
@@ -29,6 +29,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
     
     var cnt = 0
     var num = 0
+    @Published var flagForHave: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +129,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
                 else if str == "end" {
                     self.cnt += 1
                     Firestore.firestore().collection("schedules").document("cntSet").setData(["cnt": cnt])
+                    flagForHave = true
                 }
             }
             

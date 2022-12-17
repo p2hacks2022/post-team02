@@ -94,7 +94,7 @@ struct AskHaveScheduleView: View {
 }
 
 struct AskScheduleView: View {
-    @State private var flagForHave = false
+    @StateObject var flagForHave = ChatViewController()
     
     init(){
         setupNavigationBar()
@@ -114,7 +114,17 @@ struct AskScheduleView: View {
     
     var body: some View {
         ZStack {
+            
+            NavigationLink(destination: HaveScheduleFinalView(), isActive: $flagForHave.flagForHave) {
+                EmptyView()
+            }
             ChatViewControllerWrapper()
+            Button(action: {
+                print($flagForHave.flagForHave)
+            }, label: {
+                Text("push")
+                    .foregroundColor(Color.black)
+            })
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
@@ -376,8 +386,8 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         //HomeView()
         //AskHaveScheduleView()
-        //AskScheduleView()
-        AddCalendarEventView()
+        AskScheduleView()
+        //AddCalendarEventView()
         //HaveScheduleFinalView()
         //NotHaveScheduleFinalView()
         //SelectSantaView()
