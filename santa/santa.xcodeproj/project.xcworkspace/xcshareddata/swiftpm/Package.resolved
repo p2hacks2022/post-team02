@@ -107,6 +107,15 @@
         "revision" : "ab3a58b7209a17d781c0d1dbb3e1ff3da306bae8",
         "version" : "1.20.3"
       }
+    },
+    {
+      "identity" : "swiftygif",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kirualex/SwiftyGif",
+      "state" : {
+        "branch" : "master",
+        "revision" : "4a6f5bad863c5365b192f8441f62c713ecff62bd"
+      }
     }
   ],
   "version" : 2
