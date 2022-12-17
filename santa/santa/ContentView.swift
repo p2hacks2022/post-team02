@@ -11,6 +11,7 @@ import EventKitUI
 import FirebaseFirestore
 
 struct HomeView: View {
+    let gifData = NSDataAsset(name:"Home_back")?.data
     var body: some View {
         NavigationStack{
             NavigationLink{
@@ -18,15 +19,15 @@ struct HomeView: View {
             } label: {
                 ZStack{
                     VStack{
+                        if let gifData = gifData {
+                                    GIFImage(data: gifData)
+                                .ignoresSafeArea()
+                                }
+                        /*
                         Image("HomeView_back")
                             .ignoresSafeArea()
+                         */
                     }
-                    
-                    Text("TAP to TALK")
-                        .font(.custom("AB-hanamaki", size: 15))
-                        .foregroundColor(Color.white)
-                        .padding(.top, 700)
-                    //.position(x: 137+115/2, y: 767)
                 }
             }
         }
@@ -39,7 +40,7 @@ struct AskHaveScheduleView: View {
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
-                Image("light2")
+                Image("light")
                     .padding(.bottom,749)
                     
                 VStack {
@@ -300,9 +301,9 @@ struct AddCalendarEventView: View {
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
-                Image("AddCalendar")
+                Image("AddCalendarEventView")
                     .ignoresSafeArea()
-                Image("light2")
+                Image("light")
                     .padding(.bottom,749)
                 VStack {
                     
@@ -407,12 +408,12 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // HomeView()
+        HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-        //AddCalendarEventView()
+        // AddCalendarEventView()
         // AddCalendarEventView()
         // SelectSantaView()
-        Test()
+        //Test()
     }
 }
