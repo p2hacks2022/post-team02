@@ -8,6 +8,7 @@
 import SwiftUI
 import WebKit
 import EventKitUI
+import FirebaseFirestore
 
 struct HomeView: View {
     var body: some View {
@@ -25,7 +26,7 @@ struct HomeView: View {
                         .font(.custom("AB-hanamaki", size: 15))
                         .foregroundColor(Color.white)
                         .padding(.top, 700)
-                        //.position(x: 137+115/2, y: 767)
+                    //.position(x: 137+115/2, y: 767)
                 }
             }
         }
@@ -84,9 +85,9 @@ struct AskHaveScheduleView: View {
 struct AskScheduleView: View {
     
     init(){
-            setupNavigationBar()
+        setupNavigationBar()
     }
-        
+    
     func setupNavigationBar() {
         let appearance = UINavigationBarAppearance()
         
@@ -101,31 +102,31 @@ struct AskScheduleView: View {
     
     let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
     
-        var body: some View {
-            ZStack {
-                MyWebView(url: url)
-            }
-            .navigationBarTitle("")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(
-                        action: {
-                            dismiss()
-                        }, label: {
-                                HStack {
-                                    Image(systemName: "chevron.backward")
-                                        .foregroundColor(Color.white)
-                                    Text("サンタ＝サン")
-                                        .foregroundColor(Color.white)
-                                        .padding(.leading, 20.0)
-                                }
+    var body: some View {
+        ZStack {
+            MyWebView(url: url)
+        }
+        .navigationBarTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(
+                    action: {
+                        dismiss()
+                    }, label: {
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(Color.white)
+                            Text("サンタ＝サン")
+                                .foregroundColor(Color.white)
+                                .padding(.leading, 20.0)
                         }
-                    )
-                }
+                    }
+                )
             }
         }
+    }
 }
 
 struct MyWebView: UIViewRepresentable {
@@ -149,7 +150,7 @@ struct MyWebView: UIViewRepresentable {
     /// アプリの状態が更新される場合に呼ばる
     /// Viewの更新処理はこのメソッドに記述する
     func updateUIView(_ uiView: WKWebView, context: Context) {
-
+        
         /// WKWebViewのURLが変わったこと（WebView内画面遷移）を検知して、URLをログ出力する
         observable.instance = uiView.observe(\WKWebView.url, options: .new) { view, change in
             if let url = view.url {
@@ -167,117 +168,119 @@ private class WebViewURLObservable: ObservableObject {
     @Published var instance: NSKeyValueObservation?
 }
 
-/*
-struct SelectSantaView: View {
-    
-    @Environment(\.dismiss) var dismiss
-    
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.red
-    }
-    
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.xGreen
-                    .ignoresSafeArea()
-                Text("話を聞いてもらうサンタを選ぶ")
-                    .foregroundColor(Color.white)
-                    .frame(width: 395, height: 120)
-                    .padding(.top, 30.0)
-                    .background(Color.xRed)
-                    .cornerRadius(20)
-                    .padding(.bottom, 680.0)
-                    .font(.system(size: 20))
-                VStack {
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝サン")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                            Text("日本のクリスマスをずっと見てきた。ゆったり話を聞いてくれます。")
-                                .font(.system(size: 13))
-                        }
-                        
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .padding(.bottom, 100.0)
-                    
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝マン")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                            Text("アメリカ生まれのアメリカ育ち。ファンキーに話を聞いてくれます。")
-                                .font(.system(size: 13))
-                        }
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .padding(.bottom, 100.0)
-                    
-                    HStack {
-                        Circle()
-                            .strokeBorder(Color.black)
-                            .frame(width: 54, height: 54)
-                            
-                        VStack(alignment: .leading) {
-                            Text("サンタ＝イエア")
-                                .fontWeight(.black)
-                                .font(.system(size: 15))
-                                
-                            Text("世界中を飛び回っている。感情豊かに話を聞いてくれます")
-                                .font(.system(size: 13))
-                        }
-                    }
-                    .frame(width: 290.0, height: 54.0)
-                    .padding(.horizontal, 18.0)
-                    .padding(.vertical, 16.0)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                }
-                .padding(.top, 60.0)
-            }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Button(
-                        action: {
-                            dismiss()
-                        }, label: {
-                            HStack {
-                                Image(systemName: "chevron.backward")
-                                    .foregroundColor(Color.white)
-                                Text("本当は予定がなかった…")
-                                    .foregroundColor(Color.white)
-                            }
-                        }
-                    )
-                    Spacer()
-                }
-            }
-        }
-    }
-}
-*/
+
+//struct SelectSantaView: View {
+//
+//    @Environment(\.dismiss) var dismiss
+//
+//    init() {
+//        let appearance = UINavigationBarAppearance()
+//        appearance.backgroundColor = UIColor.red
+//    }
+//
+//    var body: some View {
+//        NavigationStack {
+//            ZStack {
+//                Color.xGreen
+//                    .ignoresSafeArea()
+//                Text("話を聞いてもらうサンタを選ぶ")
+//                    .foregroundColor(Color.white)
+//                    .frame(width: 395, height: 120)
+//                    .padding(.top, 30.0)
+//                    .background(Color.xRed)
+//                    .cornerRadius(20)
+//                    .padding(.bottom, 680.0)
+//                    .font(.system(size: 20))
+//                VStack {
+//                    HStack {
+//                        Circle()
+//                            .strokeBorder(Color.black)
+//                            .frame(width: 54, height: 54)
+//
+//                        VStack(alignment: .leading) {
+//                            Text("サンタ＝サン")
+//                                .fontWeight(.black)
+//                                .font(.system(size: 15))
+//                            Text("日本のクリスマスをずっと見てきた。ゆったり話を聞いてくれます。")
+//                                .font(.system(size: 13))
+//                        }
+//
+//                    }
+//                    .frame(width: 290.0, height: 54.0)
+//                    .padding(.horizontal, 18.0)
+//                    .padding(.vertical, 16.0)
+//                    .background(Color.white)
+//                    .cornerRadius(15)
+//                    .padding(.bottom, 100.0)
+//
+//                    HStack {
+//                        Circle()
+//                            .strokeBorder(Color.black)
+//                            .frame(width: 54, height: 54)
+//
+//                        VStack(alignment: .leading) {
+//                            Text("サンタ＝マン")
+//                                .fontWeight(.black)
+//                                .font(.system(size: 15))
+//                            Text("アメリカ生まれのアメリカ育ち。ファンキーに話を聞いてくれます。")
+//                                .font(.system(size: 13))
+//                        }
+//                    }
+//                    .frame(width: 290.0, height: 54.0)
+//                    .padding(.horizontal, 18.0)
+//                    .padding(.vertical, 16.0)
+//                    .background(Color.white)
+//                    .cornerRadius(15)
+//                    .padding(.bottom, 100.0)
+//
+//                    HStack {
+//                        Circle()
+//                            .strokeBorder(Color.black)
+//                            .frame(width: 54, height: 54)
+//
+//                        VStack(alignment: .leading) {
+//                            Text("サンタ＝イエア")
+//                                .fontWeight(.black)
+//                                .font(.system(size: 15))
+//
+//                            Text("世界中を飛び回っている。感情豊かに話を聞いてくれます")
+//                                .font(.system(size: 13))
+//                        }
+//                    }
+//                    .frame(width: 290.0, height: 54.0)
+//                    .padding(.horizontal, 18.0)
+//                    .padding(.vertical, 16.0)
+//                    .background(Color.white)
+//                    .cornerRadius(15)
+//                }
+//                .padding(.top, 60.0)
+//            }
+//            .navigationBarBackButtonHidden(true)
+//            .toolbar {
+//                ToolbarItemGroup(placement: .bottomBar) {
+//                    Button(
+//                        action: {
+//                            dismiss()
+//                        }, label: {
+//                            HStack {
+//                                Image(systemName: "chevron.backward")
+//                                    .foregroundColor(Color.white)
+//                                Text("本当は予定がなかった…")
+//                                    .foregroundColor(Color.white)
+//                            }
+//                        }
+//                    )
+//                    Spacer()
+//                }
+//            }
+//        }
+//    }
+//}
+
 
 struct AddCalendarEventView: View {
+    @Environment(\.dismiss) var dismiss
+    
     private let eventStore = EventStore()
     let calendar = Calendar(identifier: .gregorian)
     @State private var eventTitle = "test"
@@ -301,9 +304,19 @@ struct AddCalendarEventView: View {
                     Button {
                         Task {
                             await eventStore.requestAccess()
+                            Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                } else {
+                                    let data = success!.data()
+                                    eventTitle = success!.data()?["name"] as? String ?? ""
+                                    startDate = success!.data()?["startDate"] as? Date ?? Date()
+                                    endDate = success!.data()?["endDate"] as? Date ?? Date()
+                                }
+                            }
                             await eventStore.addEvent(
-                                startDate: calendar.date(from: DateComponents(year: 2022, month: 12, day: 25, hour: 19, minute: 0))!,
-                                endDate: calendar.date(from: DateComponents(year: 2022, month: 12, day: 25, hour: 22, minute: 0))!,
+                                startDate: startDate,
+                                endDate: endDate,
                                 title: eventTitle
                             )
                         }
@@ -316,30 +329,34 @@ struct AddCalendarEventView: View {
                             .cornerRadius(27)
                             .padding(.bottom, 154.0)
                     }
-                    
-                    //back to AskScedule
-                    NavigationLink{
-                        AskHaveScheduleView()
-                    } label: {
-                        HStack{
-                            Image(systemName: "chevron.backward")
-                                .foregroundColor(Color.white)
-                            Text("やっぱり予定があった！！")
-                                .font(.custom("AB-hanamaki", size: 20))
-                                .frame(width: 250, height: 20)
-                                .foregroundColor(Color.white)
-                                .padding(.trailing, 60.0)
-                        }
-                    }
-                    
                 }
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button(
+                        action: {
+                            dismiss()
+                        }, label: {
+                            HStack {
+                                Image(systemName: "chevron.backward")
+                                    .foregroundColor(Color.white)
+                                Text("やっぱり予定があった！！")
+                                    .font(.custom("AB-hanamaki", size: 20))
+                                    .frame(width: 250, height: 20)
+                                    .foregroundColor(Color.white)
+                                    .padding(.trailing, 60.0)
+                            }
+                        }
+                    )
+                    Spacer()
+                }
+            }
         }
     }
 }
- 
+
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
     
@@ -362,6 +379,28 @@ struct CustomBackButton: ViewModifier {
     }
 }
 
+struct Test: View {
+    @State private var str = ""
+    var body: some View {
+        VStack {
+            Text(str)
+            Button(action: {
+                Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        let data = success!.data()
+                        str = success!.data()?["name"] as? String ?? ""
+                        print(data!)
+                    }
+                }
+            }, label: {
+                Text("push")
+            })
+        }
+    }
+}
+
 extension View {
     func customBackButton() -> some View {
         self.modifier(CustomBackButton())
@@ -375,5 +414,6 @@ struct ContentView_Previews: PreviewProvider {
         // AskScheduleView()
         // AddCalendarEventView()
         // SelectSantaView()
+        // Test()
     }
 }

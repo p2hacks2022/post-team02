@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9C0F3C0D294CC9B30031CE28 /* calendarControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */; };
+		9C0F3C0F294CEDE30031CE28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0E294CEDE30031CE28 /* GoogleService-Info.plist */; };
+		9C0F3C10294CEDE30031CE28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0E294CEDE30031CE28 /* GoogleService-Info.plist */; };
+		9C0F3C11294CEDE30031CE28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0E294CEDE30031CE28 /* GoogleService-Info.plist */; };
+		9C0F3C14294CEEBD0031CE28 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C0F3C13294CEEBD0031CE28 /* FirebaseFirestore */; };
 		9C461C82294720AD0065417E /* ColorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C461C81294720AD0065417E /* ColorExtention.swift */; };
 		9C461C842947710E0065417E /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C461C832947710E0065417E /* CustomBackButton.swift */; };
 		9C7A0F9D29458444003644CB /* santaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7A0F9C29458444003644CB /* santaApp.swift */; };
@@ -39,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarControll.swift; sourceTree = "<group>"; };
+		9C0F3C0E294CEDE30031CE28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9C461C81294720AD0065417E /* ColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtention.swift; sourceTree = "<group>"; };
 		9C461C832947710E0065417E /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		9C7A0F9929458444003644CB /* santa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = santa.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C0F3C14294CEEBD0031CE28 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +117,7 @@
 				9CFE59992949FC7300FDFB93 /* 47699.otf */,
 				9C7A0FA029458448003644CB /* Assets.xcassets */,
 				9C461C81294720AD0065417E /* ColorExtention.swift */,
+				9C0F3C0E294CEDE30031CE28 /* GoogleService-Info.plist */,
 				9C7A0FA229458448003644CB /* Preview Content */,
 			);
 			path = santa;
@@ -157,6 +164,9 @@
 			dependencies = (
 			);
 			name = santa;
+			packageProductDependencies = (
+				9C0F3C13294CEEBD0031CE28 /* FirebaseFirestore */,
+			);
 			productName = santa;
 			productReference = 9C7A0F9929458444003644CB /* santa.app */;
 			productType = "com.apple.product-type.application";
@@ -229,6 +239,9 @@
 				Base,
 			);
 			mainGroup = 9C7A0F9029458444003644CB;
+			packageReferences = (
+				9C0F3C12294CEEBD0031CE28 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 9C7A0F9A29458444003644CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -246,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CFE599A2949FC7300FDFB93 /* 47699.otf in Resources */,
+				9C0F3C0F294CEDE30031CE28 /* GoogleService-Info.plist in Resources */,
 				9C7A0FA429458448003644CB /* Preview Assets.xcassets in Resources */,
 				9C7A0FA129458448003644CB /* Assets.xcassets in Resources */,
 			);
@@ -255,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C0F3C10294CEDE30031CE28 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C0F3C11294CEDE30031CE28 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +615,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C0F3C12294CEEBD0031CE28 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C0F3C13294CEEBD0031CE28 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C0F3C12294CEEBD0031CE28 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C7A0F9129458444003644CB /* Project object */;
 }
