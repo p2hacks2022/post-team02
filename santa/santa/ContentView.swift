@@ -39,6 +39,9 @@ struct AskHaveScheduleView: View {
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
+                Image("light2")
+                    .padding(.bottom,749)
+                    
                 VStack {
                     Text("クリスマスに予定がありますか？")
                         .font(.custom("AB-hanamaki", size: 20))
@@ -297,14 +300,11 @@ struct AddCalendarEventView: View {
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
+                Image("AddCalendar")
+                    .ignoresSafeArea()
+                Image("light2")
+                    .padding(.bottom,749)
                 VStack {
-                    Text("MERRYでHAPPYでLUCKYな予定を")
-                        .font(.custom("AB-hanamaki", size: 48))
-                        .foregroundColor(Color.white)
-                        .frame(width:241, height:351, alignment: .leading)
-                        .lineSpacing(48)
-                        .padding(.top, 50.0)
-                        .padding(.bottom, 112.0)
                     
                     Button {
                         Task {
@@ -322,7 +322,7 @@ struct AddCalendarEventView: View {
                             .foregroundColor(Color.black)
                             .background(Color.white)
                             .cornerRadius(27)
-                            .padding(.bottom, 154.0)
+                            .padding(.top, 500.0)
                             .shadow(color: .black.opacity(0.5), radius: 5, x: 7, y: 7)
                     }
                 }
@@ -408,9 +408,9 @@ extension View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         // HomeView()
-        // AskHaveScheduleView()
+         AskHaveScheduleView()
         // AskScheduleView()
-        AddCalendarEventView()
+        //AddCalendarEventView()
         // SelectSantaView()
         // Test()
     }
