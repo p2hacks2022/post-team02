@@ -394,24 +394,8 @@ struct CustomBackButton: ViewModifier {
 }
 
 struct Test: View {
-    @State private var str = ""
     var body: some View {
-        VStack {
-            Text(str)
-            Button(action: {
-                Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else {
-                        let data = success!.data()
-                        str = success!.data()?["name"] as? String ?? ""
-                        print(data!)
-                    }
-                }
-            }, label: {
-                Text("push")
-            })
-        }
+        ChatViewControllerWrapper()
     }
 }
 
@@ -423,11 +407,11 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        // HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
         // AddCalendarEventView()
         // SelectSantaView()
-        // Test()
+        Test()
     }
 }
