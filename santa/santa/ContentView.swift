@@ -94,6 +94,7 @@ struct AskHaveScheduleView: View {
 }
 
 struct AskScheduleView: View {
+    @State private var flagForHave = false
     
     init(){
         setupNavigationBar()
@@ -110,8 +111,6 @@ struct AskScheduleView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    
-    let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
     
     var body: some View {
         ZStack {
@@ -192,6 +191,7 @@ struct AddCalendarEventView: View {
     @State private var max = 0
     @State private var num = 0
     @State private var idx = 0
+    @State private var flagForNotHave = false
     
     
     var body: some View {
@@ -205,10 +205,11 @@ struct AddCalendarEventView: View {
                 Image("light")
                     .padding(.bottom,749)
                 VStack {
-                    
+                    NavigationLink(destination: NotHaveScheduleFinalView(), isActive: $flagForNotHave) {
+                        EmptyView()
+                    }
                     Button {
-                        NotHaveScheduleFinalView()
-                    
+                        
                         Task {
                             await eventStore.requestAccess()
                             for i in 0...idx {
@@ -232,6 +233,7 @@ struct AddCalendarEventView: View {
                                     }
                                 }
                             }
+                            flagForNotHave = true
                         }
                         
                     } label: {
@@ -315,6 +317,7 @@ struct HaveScheduleFinalView: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
@@ -329,6 +332,7 @@ struct NotHaveScheduleFinalView: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
@@ -370,10 +374,10 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        //HomeView()
         //AskHaveScheduleView()
         //AskScheduleView()
-        //AddCalendarEventView()
+        AddCalendarEventView()
         //HaveScheduleFinalView()
         //NotHaveScheduleFinalView()
         //SelectSantaView()
