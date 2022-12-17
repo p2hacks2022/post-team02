@@ -327,7 +327,7 @@ struct AddCalendarEventView: View {
                     }
                 }
                 .task {
-                    Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
+                    Firestore.firestore().collection("schedules").document("-1").getDocument { (success, error) in
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
@@ -410,8 +410,8 @@ struct ContentView_Previews: PreviewProvider {
         // HomeView()
         // AskHaveScheduleView()
         // AskScheduleView()
-        // AddCalendarEventView()
+        AddCalendarEventView()
         // SelectSantaView()
-        Test()
+        // Test()
     }
 }
