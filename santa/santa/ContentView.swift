@@ -56,6 +56,7 @@ struct AskHaveScheduleView: View {
                             .background(Color.white)
                             .cornerRadius(27)
                             .padding(.bottom, 35.0)
+                            .shadow(color: .black.opacity(0.5), radius: 5, x: 7, y: 7)
                     }
                     
                     NavigationLink {
@@ -68,6 +69,7 @@ struct AskHaveScheduleView: View {
                             .background(Color.white)
                             .cornerRadius(27)
                             .padding(.bottom, 84.0)
+                            .shadow(color: .black.opacity(0.5), radius: 5, x: 7, y: 7)
                     }
                     
                     
@@ -284,15 +286,18 @@ struct AddCalendarEventView: View {
     private let eventStore = EventStore()
     let calendar = Calendar(identifier: .gregorian)
     @State private var eventTitle = "test"
+    @State private var startDate_timestamp = Timestamp()
+    @State private var endDate_timestamp = Timestamp()
     @State private var startDate = Date()
     @State private var endDate = Date()
+    
     
     var body: some View {
         NavigationStack{
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
-                VStack{
+                VStack {
                     Text("MERRYでHAPPYでLUCKYな予定を")
                         .font(.custom("AB-hanamaki", size: 48))
                         .foregroundColor(Color.white)
@@ -304,16 +309,6 @@ struct AddCalendarEventView: View {
                     Button {
                         Task {
                             await eventStore.requestAccess()
-                            Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
-                                if let error = error {
-                                    print(error.localizedDescription)
-                                } else {
-                                    let data = success!.data()
-                                    eventTitle = success!.data()?["name"] as? String ?? ""
-                                    startDate = success!.data()?["startDate"] as? Date ?? Date()
-                                    endDate = success!.data()?["endDate"] as? Date ?? Date()
-                                }
-                            }
                             await eventStore.addEvent(
                                 startDate: startDate,
                                 endDate: endDate,
@@ -328,6 +323,25 @@ struct AddCalendarEventView: View {
                             .background(Color.white)
                             .cornerRadius(27)
                             .padding(.bottom, 154.0)
+                            .shadow(color: .black.opacity(0.5), radius: 5, x: 7, y: 7)
+                    }
+                }
+                .task {
+                    Firestore.firestore().collection("schedules").document("1").getDocument { (success, error) in
+                        if let error = error {
+                            print(error.localizedDescription)
+                        } else {
+                            let data = success!.data()
+                            eventTitle = data?["name"] as? String ?? ""
+                            startDate_timestamp = data?["startDate"] as! Timestamp
+                            endDate_timestamp = data?["endDate"] as! Timestamp
+                            startDate = startDate_timestamp.dateValue()
+                            endDate = endDate_timestamp.dateValue()
+                            
+                            print(eventTitle)
+                            print(startDate)
+                            print(endDate)
+                        }
                     }
                 }
             }
