@@ -212,6 +212,7 @@ struct AddCalendarEventView: View {
         }
     }
 }
+
 struct test: View {
     var body: some View {
         VStack {
@@ -235,7 +236,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
 class ChatViewController: UIViewController, WKScriptMessageHandler {
     private var webView: WKWebView!
     
-    private let apiKey = "aeaa5daf-67f3-4b03-9a0d-182aeb9c626f185165c960f1b6"
+    private let apiKey = "3720bd6f-56d9-4786-b864-063be074c5181851c28e31f1c3"
     private let uid = UUID().uuidString
     
     override func viewDidLoad() {
@@ -245,7 +246,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
         userContentController.add(self, name: "meboCallBack")
         config.userContentController = userContentController
         webView = WKWebView(frame: .zero, configuration: config)
-        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/bdc6523b-12a8-4e36-a042-f8934e869d6c185165b0e3c260?name=%E3%82%B5%E3%83%B3%E3%82%BF=%E3%82%B5%E3%83%B3&platform=webview")!))
+        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/659c76cc-5363-47f2-9c6e-8b3950eab0471851c26062d9e?name=%E3%82%B5%E3%83%B3%E3%82%BF4&platform=webview")!))
         view = webView
     }
 
@@ -301,14 +302,63 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
             if let str = chatEvent.extensions?.f_where {
                 print(str)
             }
-            
+    
             if let str = chatEvent.extensions?.s_time {
+                
                 print(str)
+
+//                let timeZone = TimeZone(abbreviation: "UTC")
+//                let dateFormatter = DateFormatter()
+//                var dateFormat = "yyyy/MM/dd HH-mm-ss"
+//                dateFormatter.dateFormat = dateFormat
+                
+//                let dateFormatter = DateFormatter()
+//                var dateFormat = "yyyy/MM/dd HH-mm-ss"
+//                dateFormatter.dateFormat = dateFormat
+//                // 日本標準時（地域名で指定）
+//                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                
+                var dateFormatter = DateFormatter()
+                
+                // フォーマット設定
+                dateFormatter.dateFormat = "yyyy/MM/dd HH-mm-ss"
+                // ロケール設定（端末の暦設定に引きづられないようにする）
+                dateFormatter.locale = Locale(identifier: "ja_JP")
+                // タイムゾーン設定（端末設定によらず、どこの地域の時間帯なのかを指定する）
+                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                // 変換
+                
+                       if let date = dateFormatter.date(from: str)  {
+                           print("Date(): ", date + 32400)
+                       } else {
+                           print("ERROR to convert")
+                       }
+                
+                //print(str)
             }
             
             if let str = chatEvent.extensions?.e_time {
+                
                 print(str)
+                let dateFormatter = DateFormatter()
+                
+                
+                // フォーマット設定
+                dateFormatter.dateFormat = "yyyy/MM/dd HH-mm-ss"
+                // ロケール設定（端末の暦設定に引きづられないようにする）
+                dateFormatter.locale = Locale(identifier: "ja_JP")
+                // タイムゾーン設定（端末設定によらず、どこの地域の時間帯なのかを指定する）
+                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                // 変換
+               
+                
+                if let date = dateFormatter.date(from: str) {
+                            print("Dateend(): ", date + 32400)
+                       } else {
+                           print("ERROR to convert")
+                       }
             }
+            
             
             if let str = chatEvent.extensions?.nextwhere {
                 print(str)
@@ -322,7 +372,6 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
 //            print(chatEvent.extensions?.s_time)
 //            print(chatEvent.extensions?.e_time)
 //            print(chatEvent.extensions?.nextwhere)
-//
             
             
                 break
