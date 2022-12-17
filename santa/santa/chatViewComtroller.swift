@@ -24,7 +24,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
 class ChatViewController: UIViewController, WKScriptMessageHandler {
     private var webView: WKWebView!
     
-    private let apiKey = "eb7a6e49-9e33-4479-a7ff-64bd637c8c041851f11c41410f"
+    private let apiKey = "a4ba4aa7-94a2-4834-ab75-01ea506d9d81185207859ef20e"
     private let uid = UUID().uuidString
     
     var cnt = 0
@@ -37,7 +37,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
         userContentController.add(self, name: "meboCallBack")
         config.userContentController = userContentController
         webView = WKWebView(frame: .zero, configuration: config)
-        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/e9f1e377-6d48-41d8-bf3b-5fef79f3f0401851f111aef27b?name=%E3%82%B5%E3%83%B3%E3%82%BF=san&platform=webview")!))
+        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/f499efbc-0c02-4899-8fc0-e10e82dec4be1852076c39eb4?name=%E3%82%B5%E3%83%B3%E3%82%BF&platform=webview")!))
         view = webView
     }
     

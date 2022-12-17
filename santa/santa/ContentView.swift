@@ -408,10 +408,11 @@ extension View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         // HomeView()
-         AskHaveScheduleView()
+        // AskHaveScheduleView()
         // AskScheduleView()
         //AddCalendarEventView()
+        // AddCalendarEventView()
         // SelectSantaView()
-        // Test()
+        Test()
     }
 }
