@@ -9,17 +9,22 @@ import SwiftUI
 import WebKit
 import EventKitUI
 import FirebaseFirestore
+import AVFoundation
+
 
 struct HomeView: View {
-    let gifData = NSDataAsset(name:"Home_back")?.data
+    let gifData_HomeView = NSDataAsset(name:"Home_back")?.data
+    
     var body: some View {
+        
         NavigationStack{
             NavigationLink{
                 AskHaveScheduleView()
             } label: {
+                
                 ZStack{
                     VStack{
-                        if let gifData = gifData {
+                        if let gifData = gifData_HomeView {
                                     GIFImage(data: gifData)
                                 .ignoresSafeArea()
                                 }
@@ -297,6 +302,7 @@ struct AddCalendarEventView: View {
     
     
     var body: some View {
+        
         NavigationStack{
             ZStack {
                 Color.xGreen
@@ -308,6 +314,8 @@ struct AddCalendarEventView: View {
                 VStack {
                     
                     Button {
+                        NotHaveScheduleFinalView()
+                    
                         Task {
                             await eventStore.requestAccess()
                             await eventStore.addEvent(
@@ -316,6 +324,7 @@ struct AddCalendarEventView: View {
                                 title: eventTitle
                             )
                         }
+                        
                     } label: {
                         Text("カレンダーに追加する")
                             .font(.custom("AB-hanamaki", size: 20))
@@ -372,6 +381,34 @@ struct AddCalendarEventView: View {
     }
 }
 
+struct HaveScheduleFinalView: View {
+    let gifData_HaveScheduleFinalView = NSDataAsset(name:"HaveScheduleFinalView")?.data
+    var body: some View {
+        ZStack{
+            VStack{
+                if let gifData = gifData_HaveScheduleFinalView {
+                    GIFImage(data: gifData)
+                        .ignoresSafeArea()
+                }
+            }
+        }
+    }
+}
+
+struct NotHaveScheduleFinalView: View {
+    let gifData_NotHaveScheduleFinalView = NSDataAsset(name:"NotHaveScheduleFinalView")?.data
+    var body: some View {
+        ZStack{
+            VStack{
+                if let gifData = gifData_NotHaveScheduleFinalView {
+                    GIFImage(data: gifData)
+                        .ignoresSafeArea()
+                }
+            }
+        }
+    }
+}
+
 struct CustomBackButton: ViewModifier {
     @Environment(\.dismiss) var dismiss
     
@@ -406,13 +443,17 @@ extension View {
     }
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-        // AskHaveScheduleView()
-        // AskScheduleView()
-        // AddCalendarEventView()
-        // AddCalendarEventView()
+        //AskHaveScheduleView()
+        //AskScheduleView()
+        //AddCalendarEventView()
+        //HaveScheduleFinalView()
+        //NotHaveScheduleFinalView()
+        
         // SelectSantaView()
         //Test()
     }
