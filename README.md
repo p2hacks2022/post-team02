@@ -1,7 +1,7 @@
 # P2HACKS2022 アピールシート 
 
 プロダクト名  
-Envy Schedule
+Merry Envy Schedule
 
 コンセプト  
 **クリスマスはみんな平等に訪れる。** 
