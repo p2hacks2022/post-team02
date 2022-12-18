@@ -95,6 +95,9 @@ struct AskHaveScheduleView: View {
 
 struct AskScheduleView: View {
     @StateObject var flagForHave = ChatViewController()
+    @State var move: Int? = 0
+    @State var tag: Int? = nil
+    private let defaultTag: Int = 8888
     
     init(){
         setupNavigationBar()
@@ -115,16 +118,10 @@ struct AskScheduleView: View {
     var body: some View {
         ZStack {
             
-            NavigationLink(destination: HaveScheduleFinalView(), isActive: $flagForHave.flagForHave) {
+            NavigationLink(destination: HaveScheduleFinalView(), tag: defaultTag, selection: $tag) {
                 EmptyView()
             }
             ChatViewControllerWrapper()
-            Button(action: {
-                print($flagForHave.flagForHave)
-            }, label: {
-                Text("push")
-                    .foregroundColor(Color.black)
-            })
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
@@ -141,6 +138,22 @@ struct AskScheduleView: View {
                             Text("サンタ＝サン")
                                 .foregroundColor(Color.white)
                                 .padding(.leading, 20.0)
+                        }
+                    }
+                )
+            };
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(
+                    action: {
+                        self.tag = self.defaultTag
+                    }, label: {
+                        HStack {
+                            Text("次に進む")
+                                .foregroundColor(Color.white)
+                                .padding(.trailing, 20.0)
+                            Image(systemName: "chevron.forward")
+                                .foregroundColor(Color.white)
+                            
                         }
                     }
                 )
@@ -385,8 +398,8 @@ extension View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         //HomeView()
-        //AskHaveScheduleView()
-        AskScheduleView()
+        AskHaveScheduleView()
+        //AskScheduleView()
         //AddCalendarEventView()
         //HaveScheduleFinalView()
         //NotHaveScheduleFinalView()
