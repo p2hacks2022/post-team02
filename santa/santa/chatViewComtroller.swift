@@ -24,7 +24,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
 class ChatViewController: UIViewController, WKScriptMessageHandler, ObservableObject {
     private var webView: WKWebView!
     
-    private let apiKey = "a4ba4aa7-94a2-4834-ab75-01ea506d9d81185207859ef20e"
+    private let apiKey = "APIkey"
     private let uid = UUID().uuidString
     
     var cnt = 0
@@ -38,7 +38,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler, ObservableOb
         userContentController.add(self, name: "meboCallBack")
         config.userContentController = userContentController
         webView = WKWebView(frame: .zero, configuration: config)
-        webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/f499efbc-0c02-4899-8fc0-e10e82dec4be1852076c39eb4?name=%E3%82%B5%E3%83%B3%E3%82%BF&platform=webview")!))
+        webView.load(URLRequest(url: URL(string: "URL&platform=webview")!))
         view = webView
         Firestore.firestore().collection("schedules").document("cntSet").getDocument { (success, error) in
             if let error = error {
