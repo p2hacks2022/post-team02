@@ -26,6 +26,8 @@
 		9C8CB713294E0B2B00B896FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C8CB712294E0B2A00B896FE /* GoogleService-Info.plist */; };
 		9C8CB714294E0B2B00B896FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C8CB712294E0B2A00B896FE /* GoogleService-Info.plist */; };
 		9C8CB715294E0B2B00B896FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C8CB712294E0B2A00B896FE /* GoogleService-Info.plist */; };
+		9CCA9F64294E1C2E0033A2A6 /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 9CCA9F63294E1C2E0033A2A6 /* SwiftyGif */; };
+		9CCA9F66294E1CB50033A2A6 /* UIGIFImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA9F65294E1CB50033A2A6 /* UIGIFImageView.swift */; };
 		9CFE599A2949FC7300FDFB93 /* 47699.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CFE59992949FC7300FDFB93 /* 47699.otf */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,7 @@
 		9C7A0FB729458449003644CB /* santaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = santaUITests.swift; sourceTree = "<group>"; };
 		9C7A0FB929458449003644CB /* santaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = santaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9C8CB712294E0B2A00B896FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9CCA9F65294E1CB50033A2A6 /* UIGIFImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGIFImageView.swift; sourceTree = "<group>"; };
 		9CFE59992949FC7300FDFB93 /* 47699.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 47699.otf; sourceTree = "<group>"; };
 		9CFE599B2949FD1600FDFB93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C0F3C14294CEEBD0031CE28 /* FirebaseFirestore in Frameworks */,
+				9CCA9F64294E1C2E0033A2A6 /* SwiftyGif in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +124,7 @@
 				9CFE599B2949FD1600FDFB93 /* Info.plist */,
 				9C7A0F9C29458444003644CB /* santaApp.swift */,
 				9C7A0F9E29458444003644CB /* ContentView.swift */,
+				9CCA9F65294E1CB50033A2A6 /* UIGIFImageView.swift */,
 				9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */,
 				201F676F294E3EB000F2E903 /* Sound.swift */,
 				9C0F3C15294D96680031CE28 /* chatViewComtroller.swift */,
@@ -177,6 +182,7 @@
 			name = santa;
 			packageProductDependencies = (
 				9C0F3C13294CEEBD0031CE28 /* FirebaseFirestore */,
+				9CCA9F63294E1C2E0033A2A6 /* SwiftyGif */,
 			);
 			productName = santa;
 			productReference = 9C7A0F9929458444003644CB /* santa.app */;
@@ -252,6 +258,7 @@
 			mainGroup = 9C7A0F9029458444003644CB;
 			packageReferences = (
 				9C0F3C12294CEEBD0031CE28 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				9CCA9F62294E1C2D0033A2A6 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = 9C7A0F9A29458444003644CB /* Products */;
 			projectDirPath = "";
@@ -303,6 +310,7 @@
 				201F6770294E3EB000F2E903 /* Sound.swift in Sources */,
 				9C461C82294720AD0065417E /* ColorExtention.swift in Sources */,
 				9C0F3C16294D96680031CE28 /* chatViewComtroller.swift in Sources */,
+				9CCA9F66294E1CB50033A2A6 /* UIGIFImageView.swift in Sources */,
 				9C461C842947710E0065417E /* CustomBackButton.swift in Sources */,
 				9C7A0F9F29458444003644CB /* ContentView.swift in Sources */,
 				9C7A0F9D29458444003644CB /* santaApp.swift in Sources */,
@@ -641,6 +649,14 @@
 				kind = branch;
 			};
 		};
+		9CCA9F62294E1C2D0033A2A6 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -648,6 +664,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C0F3C12294CEEBD0031CE28 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		9CCA9F63294E1C2E0033A2A6 /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CCA9F62294E1C2D0033A2A6 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

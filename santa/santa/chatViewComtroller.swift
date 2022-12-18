@@ -21,7 +21,7 @@ struct ChatViewControllerWrapper: UIViewControllerRepresentable {
     }
 }
 
-class ChatViewController: UIViewController, WKScriptMessageHandler {
+class ChatViewController: UIViewController, WKScriptMessageHandler, ObservableObject {
     private var webView: WKWebView!
     
     private let apiKey = "a4ba4aa7-94a2-4834-ab75-01ea506d9d81185207859ef20e"
@@ -29,6 +29,7 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
     
     var cnt = 0
     var num = 0
+    @Published var flagForHave: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,15 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
         webView = WKWebView(frame: .zero, configuration: config)
         webView.load(URLRequest(url: URL(string: "https://mebo.work/chat/f499efbc-0c02-4899-8fc0-e10e82dec4be1852076c39eb4?name=%E3%82%B5%E3%83%B3%E3%82%BF&platform=webview")!))
         view = webView
+        Firestore.firestore().collection("schedules").document("cntSet").getDocument { (success, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                let data = success!.data()
+                self.cnt = data?["cnt"] as? Int ?? 0
+                print(self.cnt)
+            }
+        }
     }
     
     //meboのチャット画面から送られてくる情報をハンドリング
@@ -93,15 +103,6 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
                 print(str)
                 
                 if str == "add" {
-                    Firestore.firestore().collection("schedules").document("cntSet").getDocument { (success, error) in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        } else {
-                            let data = success!.data()
-                            self.cnt = data?["cnt"] as? Int ?? 0
-                            print(self.cnt)
-                        }
-                    }
                     
                     let dateFormatter = DateFormatter()
                     
@@ -112,10 +113,11 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
                     // タイムゾーン設定（端末設定によらず、どこの地域の時間帯なのかを指定する）
                     dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
                     
-                    print(chatEvent.extensions?.f_where! ?? "")
-                    print(dateFormatter.date(from: (chatEvent.extensions?.s_time)!)!)
-                    print(dateFormatter.date(from: (chatEvent.extensions?.e_time)!)!)
+//                    print(chatEvent.extensions?.f_where! ?? "")
+//                    print(dateFormatter.date(from: (chatEvent.extensions?.s_time)!)!)
+//                    print(dateFormatter.date(from: (chatEvent.extensions?.e_time)!)!)
                     
+                    print("cnt: " + String(cnt))
                     Firestore.firestore().collection("schedules").document(String(cnt)).setData([
                         "name"+String(num): chatEvent.extensions?.f_where! ?? "title",
                         "startDate"+String(num): dateFormatter.date(from: (chatEvent.extensions?.s_time)!)!,
@@ -125,77 +127,11 @@ class ChatViewController: UIViewController, WKScriptMessageHandler {
                     num += 1
                 }
                 else if str == "end" {
-                    cnt += 1
+                    self.cnt += 1
                     Firestore.firestore().collection("schedules").document("cntSet").setData(["cnt": cnt])
+                    flagForHave = true
                 }
             }
-            
-            if let str = chatEvent.extensions?.f_where {
-                print(str)
-            }
-            
-            if let str = chatEvent.extensions?.s_time {
-                
-                //print(str) Stringで時間
-                
-                //                let timeZone = TimeZone(abbreviation: "UTC")
-                //                let dateFormatter = DateFormatter()
-                //                var dateFormat = "yyyy/MM/dd HH-mm-ss"
-                //                dateFormatter.dateFormat = dateFormat
-                
-                //                let dateFormatter = DateFormatter()
-                //                var dateFormat = "yyyy/MM/dd HH-mm-ss"
-                //                dateFormatter.dateFormat = dateFormat
-                //                // 日本標準時（地域名で指定）
-                //                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-                
-                let dateFormatter = DateFormatter()
-                
-                // フォーマット設定
-                dateFormatter.dateFormat = "yyyy/MM/dd HH-mm-ss"
-                // ロケール設定（端末の暦設定に引きづられないようにする）
-                dateFormatter.locale = Locale(identifier: "ja_JP")
-                // タイムゾーン設定（端末設定によらず、どこの地域の時間帯なのかを指定する）
-                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-                // 変換
-                if let date = dateFormatter.date(from: str)  {
-                    print("Date(): ", date)
-                } else {
-                    print("ERROR to convert")
-                }
-                
-                //print(str)
-            }
-            
-            if let str = chatEvent.extensions?.e_time {
-                
-                //print(str) //stringで日時
-                let dateFormatter = DateFormatter()
-                
-                
-                // フォーマット設定
-                dateFormatter.dateFormat = "yyyy/MM/dd HH-mm-ss"
-                // ロケール設定（端末の暦設定に引きづられないようにする）
-                dateFormatter.locale = Locale(identifier: "ja_JP")
-                // タイムゾーン設定（端末設定によらず、どこの地域の時間帯なのかを指定する）
-                dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-                // 変換
-                
-                
-                if let date = dateFormatter.date(from: str) {
-                    print("Dateend(): ", date)
-                } else {
-                    print("ERROR to convert")
-                }
-            }
-            
-            
-            //            print(chatEvent.extensions?.appAction)
-            //            print(chatEvent.extensions?.f_where)
-            //            print(chatEvent.extensions?.s_time)
-            //            print(chatEvent.extensions?.e_time)
-            //            print(chatEvent.extensions?.nextwhere)
-            
             
             break
         default:

@@ -10,26 +10,30 @@ import WebKit
 import EventKitUI
 import FirebaseFirestore
 import AVFoundation
-
 struct HomeView: View {
     @ObservedObject var soundPlay = soundplay()
+
+struct HomeView: View {
+    let gifData_HomeView = NSDataAsset(name:"Home_back")?.data
     
     var body: some View {
+        
         NavigationStack{
             NavigationLink{
                 AskHaveScheduleView()
             } label: {
+                
                 ZStack{
                     VStack{
+                        if let gifData = gifData_HomeView {
+                                    GIFImage(data: gifData)
+                                .ignoresSafeArea()
+                                }
+                        /*
                         Image("HomeView_back")
                             .ignoresSafeArea()
+                         */
                     }
-                    
-                    Text("TAP to TALK")
-                        .font(.custom("AB-hanamaki", size: 15))
-                        .foregroundColor(Color.white)
-                        .padding(.top, 700)
-                    //.position(x: 137+115/2, y: 767)
                 }
             }
         }
@@ -54,7 +58,7 @@ struct AskHaveScheduleView: View {
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
-                Image("light2")
+                Image("light")
                     .padding(.bottom,749)
                     
                 VStack {
@@ -103,6 +107,10 @@ struct AskHaveScheduleView: View {
 }
 
 struct AskScheduleView: View {
+    @StateObject var flagForHave = ChatViewController()
+    @State var move: Int? = 0
+    @State var tag: Int? = nil
+    private let defaultTag: Int = 8888
     
     init(){
         setupNavigationBar()
@@ -120,11 +128,13 @@ struct AskScheduleView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    let url = "https://mebo.work/chat/d090d0c9-36b9-496f-b173-5e7aedd5018718506afa89a1eb?name=%E3%82%B5%E3%83%B3%E3%82%BF"
-    
     var body: some View {
         ZStack {
-            MyWebView(url: url)
+            
+            NavigationLink(destination: HaveScheduleFinalView(), tag: defaultTag, selection: $tag) {
+                EmptyView()
+            }
+            ChatViewControllerWrapper()
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
@@ -141,6 +151,22 @@ struct AskScheduleView: View {
                             Text("サンタ＝サン")
                                 .foregroundColor(Color.white)
                                 .padding(.leading, 20.0)
+                        }
+                    }
+                )
+            };
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(
+                    action: {
+                        self.tag = self.defaultTag
+                    }, label: {
+                        HStack {
+                            Text("次に進む")
+                                .foregroundColor(Color.white)
+                                .padding(.trailing, 20.0)
+                            Image(systemName: "chevron.forward")
+                                .foregroundColor(Color.white)
+                            
                         }
                     }
                 )
@@ -187,9 +213,6 @@ struct MyWebView: UIViewRepresentable {
 private class WebViewURLObservable: ObservableObject {
     @Published var instance: NSKeyValueObservation?
 }
-
-
-
 struct AddCalendarEventView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -200,28 +223,54 @@ struct AddCalendarEventView: View {
     @State private var endDate_timestamp = Timestamp()
     @State private var startDate = Date()
     @State private var endDate = Date()
+    @State private var max = 0
+    @State private var num = 0
+    @State private var idx = 0
+    @State private var flagForNotHave = false
     
     
     var body: some View {
+        
         NavigationStack{
             ZStack {
                 Color.xGreen
                     .ignoresSafeArea()
-                Image("AddCalendar")
+                Image("AddCalendarEventView")
                     .ignoresSafeArea()
-                Image("light2")
+                Image("light")
                     .padding(.bottom,749)
                 VStack {
-                    
+                    NavigationLink(destination: NotHaveScheduleFinalView(), isActive: $flagForNotHave) {
+                        EmptyView()
+                    }
                     Button {
+                        
                         Task {
                             await eventStore.requestAccess()
-                            await eventStore.addEvent(
-                                startDate: startDate,
-                                endDate: endDate,
-                                title: eventTitle
-                            )
+                            for i in 0...idx {
+                                print(i)
+                                Firestore.firestore().collection("schedules").document(String(num)).getDocument { (success, error) in
+                                    if let error = error {
+                                        print(error.localizedDescription)
+                                    } else {
+                                        let data = success!.data()
+                                        eventTitle = data?["name" + String(i)] as? String ?? ""
+                                        startDate_timestamp = data?["startDate" + String(i)] as! Timestamp
+                                        endDate_timestamp = data?["endDate" + String(i)] as! Timestamp
+                                        startDate = startDate_timestamp.dateValue()
+                                        endDate = endDate_timestamp.dateValue()
+                                        print(eventTitle)
+                                        eventStore.addEvent(
+                                            startDate: startDate,
+                                            endDate: endDate,
+                                            title: eventTitle
+                                        )
+                                    }
+                                }
+                            }
+                            flagForNotHave = true
                         }
+                        
                     } label: {
                         Text("カレンダーに追加する")
                             .font(.custom("AB-hanamaki", size: 20))
@@ -234,20 +283,34 @@ struct AddCalendarEventView: View {
                     }
                 }
                 .task {
-                    Firestore.firestore().collection("schedules").document("-1").getDocument { (success, error) in
+                    Firestore.firestore().collection("schedules").document("cntSet").getDocument { (success, error) in
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
                             let data = success!.data()
-                            eventTitle = data?["name"] as? String ?? ""
-                            startDate_timestamp = data?["startDate"] as! Timestamp
-                            endDate_timestamp = data?["endDate"] as! Timestamp
-                            startDate = startDate_timestamp.dateValue()
-                            endDate = endDate_timestamp.dateValue()
-                            
-                            print(eventTitle)
-                            print(startDate)
-                            print(endDate)
+                            max = data?["cnt"] as! Int
+                            num = Int.random(in: 0..<max)
+                            print("num: " + String(num))
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        print("String(num): " + String(num))
+                        Firestore.firestore().collection("schedules").document(String(num)).getDocument { (success, error) in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                let data = success!.data()
+//                                eventTitle = data?["name0"] as? String ?? ""
+//                                startDate_timestamp = data?["startDate0"] as! Timestamp
+//                                endDate_timestamp = data?["endDate0"] as! Timestamp
+//                                startDate = startDate_timestamp.dateValue()
+//                                endDate = endDate_timestamp.dateValue()
+                                idx = data?["num"] as! Int
+                                
+//                                print(eventTitle)
+//                                print(startDate)
+//                                print(endDate)
+                            }
                         }
                     }
                 }
@@ -275,6 +338,36 @@ struct AddCalendarEventView: View {
                 }
             }
         }
+    }
+}
+
+struct HaveScheduleFinalView: View {
+    let gifData_HaveScheduleFinalView = NSDataAsset(name:"HaveScheduleFinalView")?.data
+    var body: some View {
+        ZStack{
+            VStack{
+                if let gifData = gifData_HaveScheduleFinalView {
+                    GIFImage(data: gifData)
+                        .ignoresSafeArea()
+                }
+            }
+        }
+        .navigationBarHidden(true)
+    }
+}
+
+struct NotHaveScheduleFinalView: View {
+    let gifData_NotHaveScheduleFinalView = NSDataAsset(name:"NotHaveScheduleFinalView")?.data
+    var body: some View {
+        ZStack{
+            VStack{
+                if let gifData = gifData_NotHaveScheduleFinalView {
+                    GIFImage(data: gifData)
+                        .ignoresSafeArea()
+                }
+            }
+        }
+        .navigationBarHidden(true)
     }
 }
 
@@ -312,13 +405,17 @@ extension View {
     }
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
         //AskHaveScheduleView()
         // AskScheduleView()
         //AddCalendarEventView()
-        // SelectSantaView()
-        // Test()
+        //HaveScheduleFinalView()
+        //NotHaveScheduleFinalView()
+        //SelectSantaView()
+        //Test()
     }
 }

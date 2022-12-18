@@ -52,7 +52,7 @@ class EventStore {
         }
     }
     
-    func addEvent(startDate: Date, endDate: Date, title: String) async {
+    func addEvent(startDate: Date, endDate: Date, title: String) {
         let defaultCalendar = eventStore.defaultCalendarForNewEvents
         let event = EKEvent(eventStore: eventStore)
         event.title = title
