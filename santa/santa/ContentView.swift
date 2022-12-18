@@ -10,10 +10,9 @@ import WebKit
 import EventKitUI
 import FirebaseFirestore
 import AVFoundation
-struct HomeView: View {
-    @ObservedObject var soundPlay = soundplay()
 
 struct HomeView: View {
+    @ObservedObject var soundPlay = soundplay()
     let gifData_HomeView = NSDataAsset(name:"Home_back")?.data
     
     var body: some View {
