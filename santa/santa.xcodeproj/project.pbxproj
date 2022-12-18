@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		201F676E294E3CB100F2E903 /* xmassongbgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 201F676D294E3CB000F2E903 /* xmassongbgm.mp3 */; };
+		201F6770294E3EB000F2E903 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F676F294E3EB000F2E903 /* Sound.swift */; };
 		9C0F3C0D294CC9B30031CE28 /* calendarControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */; };
 		9C0F3C14294CEEBD0031CE28 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C0F3C13294CEEBD0031CE28 /* FirebaseFirestore */; };
 		9C0F3C16294D96680031CE28 /* chatViewComtroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F3C15294D96680031CE28 /* chatViewComtroller.swift */; };
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		201F676D294E3CB000F2E903 /* xmassongbgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = xmassongbgm.mp3; sourceTree = "<group>"; };
+		201F676F294E3EB000F2E903 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarControll.swift; sourceTree = "<group>"; };
 		9C0F3C15294D96680031CE28 /* chatViewComtroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatViewComtroller.swift; sourceTree = "<group>"; };
 		9C461C81294720AD0065417E /* ColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtention.swift; sourceTree = "<group>"; };
@@ -122,9 +126,11 @@
 				9C7A0F9E29458444003644CB /* ContentView.swift */,
 				9CCA9F65294E1CB50033A2A6 /* UIGIFImageView.swift */,
 				9C0F3C0C294CC9B30031CE28 /* calendarControll.swift */,
+				201F676F294E3EB000F2E903 /* Sound.swift */,
 				9C0F3C15294D96680031CE28 /* chatViewComtroller.swift */,
 				9C461C832947710E0065417E /* CustomBackButton.swift */,
 				9CFE59992949FC7300FDFB93 /* 47699.otf */,
+				201F676D294E3CB000F2E903 /* xmassongbgm.mp3 */,
 				9C7A0FA029458448003644CB /* Assets.xcassets */,
 				9C461C81294720AD0065417E /* ColorExtention.swift */,
 				9C8CB712294E0B2A00B896FE /* GoogleService-Info.plist */,
@@ -274,6 +280,7 @@
 				9C8CB713294E0B2B00B896FE /* GoogleService-Info.plist in Resources */,
 				9C7A0FA429458448003644CB /* Preview Assets.xcassets in Resources */,
 				9C7A0FA129458448003644CB /* Assets.xcassets in Resources */,
+				201F676E294E3CB100F2E903 /* xmassongbgm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				201F6770294E3EB000F2E903 /* Sound.swift in Sources */,
 				9C461C82294720AD0065417E /* ColorExtention.swift in Sources */,
 				9C0F3C16294D96680031CE28 /* chatViewComtroller.swift in Sources */,
 				9CCA9F66294E1CB50033A2A6 /* UIGIFImageView.swift in Sources */,

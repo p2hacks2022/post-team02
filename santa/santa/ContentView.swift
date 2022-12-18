@@ -10,7 +10,8 @@ import WebKit
 import EventKitUI
 import FirebaseFirestore
 import AVFoundation
-
+struct HomeView: View {
+    @ObservedObject var soundPlay = soundplay()
 
 struct HomeView: View {
     let gifData_HomeView = NSDataAsset(name:"Home_back")?.data
@@ -36,8 +37,20 @@ struct HomeView: View {
                 }
             }
         }
+       
+        .onAppear(){
+            soundPlay.playAudio()
+            
+        }
+        
     }
+    
+        
 }
+
+
+
+
 
 struct AskHaveScheduleView: View {
     var body: some View {
@@ -200,7 +213,6 @@ struct MyWebView: UIViewRepresentable {
 private class WebViewURLObservable: ObservableObject {
     @Published var instance: NSKeyValueObservation?
 }
-
 struct AddCalendarEventView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -397,9 +409,9 @@ extension View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        //HomeView()
-        AskHaveScheduleView()
-        //AskScheduleView()
+        HomeView()
+        //AskHaveScheduleView()
+        // AskScheduleView()
         //AddCalendarEventView()
         //HaveScheduleFinalView()
         //NotHaveScheduleFinalView()
